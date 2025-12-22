@@ -4,7 +4,6 @@ import SimpleITK as sitk
 import sys
 import os
 import pydicom
-sys.path.append("/home/cfigueroa")
 
 def print_values(array, name="Array"):
     print(f"------------------Values of {name}----------------------")
@@ -126,6 +125,7 @@ def get_pitch(ds):
         pass
     
     return None
+
 def get_mAs_from_dicom(ds):
     """
     Intenta obtener el mAs desde diferentes tags estándar y específicos de CT.

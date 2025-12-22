@@ -10,8 +10,7 @@ import pandas as pd
 import nibabel as nib
 import matplotlib.pyplot as plt
 import sys
-sys.path.append("/home/cfigueroa")
-from ldct_tests.ldct_sim.utils_functions import calculate_snr_cnr_phan, affine_from_dicom, col_mas_av
+from utils_functions import calculate_snr_cnr_phan, affine_from_dicom, col_mas_av
 
 
 def apply_ld_sinogram_full(high_path, mas_des, print_logs=False, mod=False, gaussian_noise = False):
