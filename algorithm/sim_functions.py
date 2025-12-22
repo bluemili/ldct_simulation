@@ -16,8 +16,19 @@ from utils_functions import calculate_snr_cnr_phan, affine_from_dicom, col_mas_a
 def apply_ld_sinogram_full(high_path, mas_des, print_logs=False, mod=False, gaussian_noise = False):
     """
     Apply low-dose simulation to a high-dose CT slice.
+    
+    Parameters:
+    high_path : str
+        Path to the high-dose DICOM file.
+    mas_des : float
+        Desired mAs for low-dose simulation.
+    print_logs : bool, optional
+    mod : bool, optional
+    gaussian_noise : bool, optional
+    
     If mod=True → use mAs correction with pitch (phan version).
     If print_logs=True → print intermediate steps.
+    If gaussian_noise=False → apply only Poisson noise.
     """
 
     def log(msg):
@@ -100,6 +111,9 @@ def simulation_ldct_colorectal(colorectal_path, base_dose_path, ld_method="1", s
 
 def metrics_simulation_phan(phan_path, list_phantoms, list_mas, base_dose_path, ld_method="1", save_path=False):
     '''
+
+    Function to directly simulate low dose in phantoms and calculate SNR, CNR, and sigma metrics.
+
     param 
         phan_path: Path to the folder containing the phantoms.
         list_phantoms: List of phantom names to process.
@@ -134,7 +148,7 @@ def metrics_simulation_phan(phan_path, list_phantoms, list_mas, base_dose_path, 
         for j in range(len(list_dcms)):
             dcm = os.path.join(phan_path, phantom, list_dcms[j])
             slice_dcm = pydicom.dcmread(dcm).pixel_array
-            snr_real1, snr_real2, cnr_real, sigma_real = calculate_snr_cnr(slice_dcm)
+            snr_real1, snr_real2, cnr_real, sigma_real = calculate_snr_cnr_phan(slice_dcm)
             snrs_real1.append(snr_real1)
             snrs_real2.append(snr_real2)
             cnrs_real.append(cnr_real)
@@ -150,7 +164,7 @@ def metrics_simulation_phan(phan_path, list_phantoms, list_mas, base_dose_path, 
         for j in range(len(list_dcms_h)):
             dcm_h = os.path.join(base_dose_path, list_dcms_h[j])
             h_slice, low_slice, low_sinogram = apply_ld_sinogram_full(dcm_h, mas)
-            snr_sim1, snr_sim2, cnr_sim, sigma_sim = calculate_snr_cnr(low_slice)
+            snr_sim1, snr_sim2, cnr_sim, sigma_sim = calculate_snr_cnr_phan(low_slice)
             snrs_sim1.append(snr_sim1)
             snrs_sim2.append(snr_sim2)
             cnrs_sim.append(cnr_sim)

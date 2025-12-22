@@ -6,6 +6,17 @@ import os
 import pydicom
 
 def print_values(array, name="Array"):
+
+    """
+    Función que imprime los valores máximo, mínimo, promedio y desviación estándar de un array.
+    Parámetros:
+    -----------
+    array : np.ndarray
+        Datos numéricos a analizar.
+    name : str
+        Nombre descriptivo del conjunto de datos (para los mensajes impresos).
+    """
+
     print(f"------------------Values of {name}----------------------")
     print(f"Max value of {name}:", np.max(array))
     print(f"Min value of {name}:", np.min(array))
@@ -14,7 +25,7 @@ def print_values(array, name="Array"):
 
 def histogram_values(array, name="Array", bins=100, log_scale=False):
     """
-    Visualiza un histograma con mejor formato y control sobre los parámetros.
+    Visualiza un histograma sobre el arreglo recibido.
 
     Parámetros:
     -----------
@@ -27,6 +38,7 @@ def histogram_values(array, name="Array", bins=100, log_scale=False):
     log_scale : bool
         Si es True, usa escala logarítmica en el eje Y.
     """
+
     # Asegurar que el array sea plano
     array = np.asarray(array).ravel()
     
@@ -59,6 +71,19 @@ def histogram_values(array, name="Array", bins=100, log_scale=False):
 
 
 def affine_from_dicom(path_dcms):
+
+    """
+    Genera una matriz afín 4x4 a partir de una serie DICOM utilizando SimpleITK.
+    Parámetros:
+    -----------
+    path_dcms : str
+        Ruta a la carpeta que contiene los archivos DICOM de la serie.
+    Retorna:
+    -----------
+    affine_matrix : np.ndarray
+        Matriz afín 4x4 que representa la transformación de coordenadas voxel a físicas
+    """     
+
     reader = sitk.ImageSeriesReader()
     dicom_names = reader.GetGDCMSeriesFileNames(path_dcms)
     reader.SetFileNames(dicom_names)
@@ -86,6 +111,27 @@ def affine_from_dicom(path_dcms):
 
 
 def calculate_snr_cnr_phan(ev_slice):
+
+    """
+    Calcula SNR y CNR en una imagen de phantom utilizando ROIs predefinidas.
+    En caso de utilizar otro phantom, ajustar las coordenadas de las ROIs según corresponda.
+
+    Parámetros:
+    -----------
+    ev_slice : np.ndarray
+        Imagen de phantom en la que se calcularán las métricas.
+    Retorna:
+    -----------
+    snr_tejido1 : float
+        SNR en la primera ROI de tejido.
+    snr_tejido2 : float
+        SNR en la segunda ROI de tejido.
+    cnr : float
+        CNR entre las dos ROIs de tejido.
+    sigma_tejido : float
+        Desviación estándar en la primera ROI de tejido.
+    """
+
     #ROIs (coordenadas [y1:y2, x1:x2])
     roi_tejido = ev_slice[342:355, 300:313] 
     roi_tejido2 = ev_slice[342:355, 189:202]
@@ -100,6 +146,16 @@ def calculate_snr_cnr_phan(ev_slice):
 def get_pitch(ds):
     """
     Obtiene pitch desde la metadata.
+
+    Parámetros:
+    -----------
+    ds : pydicom.Dataset
+        Dataset DICOM cargado con pydicom.
+    Retorna:
+    -----------
+    pitch : float o None
+        Valor de pitch si está disponible, de lo contrario None.
+
     """
     tags = [
         (0x0018, 0x9311),  # SpiralPitchFactor (más confiable)
@@ -128,8 +184,17 @@ def get_pitch(ds):
 
 def get_mAs_from_dicom(ds):
     """
-    Intenta obtener el mAs desde diferentes tags estándar y específicos de CT.
+    Intenta obtener el valor de mAs desde diferentes tags estándar y específicos de CT.
     Devuelve el valor encontrado o None si no existe.
+
+    Parámetros:
+    -----------
+    ds : pydicom.Dataset
+        Dataset DICOM cargado con pydicom.
+    Retorna:
+    -----------
+    mAs : float o None
+        Valor de mAs si se encuentra, de lo contrario None.
     """
 
     pitch = get_pitch(ds)
@@ -164,6 +229,16 @@ def average_mAs_from_dicoms(folder):
     """
     Recorre todos los archivos DICOM de la carpeta y calcula el promedio de mAs.
     Si no encuentra ningún valor, devuelve None.
+
+    Parámetros:
+    -----------
+    folder : str
+        Ruta a la carpeta que contiene los archivos DICOM.
+    Retorna:
+    -----------
+    mAs_avg : float o None
+        Promedio de mAs si se encuentran valores, de lo contrario None.
+
     """
     mAs_values = []
 
