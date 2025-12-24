@@ -22,6 +22,8 @@ This repository contains a folder called **`algorithm`**, which includes two Pyt
 
 Outside the folder, the file **`save_colorectal_ldct.py`** is provided. This script was used to save the low-dose versions of the CRLM dataset at half dose, quarter dose, and one-eighth of the original dose.
 
+También se tiene el archivo **`try_the_algorithm.ipynb`**, Jupyter que contiene el paso a paso del algoritmo de forma explicita, donde se puede testear el funcionamiento utilizando una slice CT y visualizar los resultados.
+
 
 ## **References**   
 Zeng, D., Huang, J., Bian, Z., Niu, S., Zhang, H., Feng, Q., Liang, Z., & Ma, J. (2015).  
