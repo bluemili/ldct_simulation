@@ -22,7 +22,11 @@ This repository contains a folder called **`algorithm`**, which includes two Pyt
 
 Outside the folder, the file **`save_colorectal_ldct.py`** is provided. This script was used to save the low-dose versions of the CRLM dataset at half dose, quarter dose, and one-eighth of the original dose.
 
-También se tiene el archivo **`try_the_algorithm.ipynb`**, Jupyter que contiene el paso a paso del algoritmo de forma explicita, donde se puede testear el funcionamiento utilizando una slice CT y visualizar los resultados.
+There is also the file **`try_the_algorithm.ipynb`**, a Jupyter notebook that contains a step-by-step, explicit description of the algorithm, where its functionality can be tested using a CT slice and the results can be visualized.
+
+Finally, there is the file **`solution_noise_sim.ipynb`**, which was used to save the simulated versions of the phantoms obtained at Dose 3.
+
+To use the code provided in this repository, it is recommended to use a virtual environment and install all the required libraries, which are listed in the **`requirements.txt`** file.
 
 
 ## **References**   
