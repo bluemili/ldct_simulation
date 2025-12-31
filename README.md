@@ -28,6 +28,11 @@ Finally, there is the file **`solution_noise_sim.ipynb`**, which was used to sav
 
 To use the code provided in this repository, it is recommended to use a virtual environment and install all the required libraries, which are listed in the **`requirements.txt`** file.
 
+## **wip [Work in progress]**
+
+The file **`calculate_seg_tumor.ipynb`** corresponds to an ongoing work whose objective is to use the TotalSegmentator model to compare tumor segmentations across images acquired at different dose levels, generated using the simulation implemented in this repository.
+However, during the implementation, issues related to the correct usage of the model were encountered, and therefore it has not yet been possible to obtain reliable results or complete this analysis.
+
 
 ## **References**   
 Zeng, D., Huang, J., Bian, Z., Niu, S., Zhang, H., Feng, Q., Liang, Z., & Ma, J. (2015).  
